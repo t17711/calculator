@@ -5,13 +5,11 @@ Your money is
 	echo("$val");
 	$perc = "";
 	 for ($x = 10; $x<=20; $x+=5){
-		if(empty($_POST["per$x"])){
+		if(empty($_POST["percentage"])){
 			$perc +="";
 		}
 		else{
-			$perc +=$x;
-		}
-	}	
+			$perc +=_input($_POST["percentage"]);		}
+	 }
 	echo("$perc");
 ?>
-
