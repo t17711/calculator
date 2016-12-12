@@ -36,7 +36,7 @@
                             <h1>
                                 <label class="label label-default">Bill subtotal:</label>
                             </h1>
-                            <input class="form-control" type="number" name="input" min="1" />
+                            <input class="form-control" type="number" name="input" min="1" max="10000"/>
                         </p>
                     </div>
                 </div>
