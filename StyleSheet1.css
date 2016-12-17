@@ -2,8 +2,8 @@
     background-color: honeydew;
      max-width:400px;
      min-height: 400px;
-     min-width:300px;
-     max-height:400px;
+     min-width:600px;
+     max-height:1000px;
      padding: 2% 5% 5% 10%;
 }
 
@@ -17,7 +17,7 @@
     font-style: oblique;
     font-size: 30px;
     max-width:inherit;
-     max-height:300px;
+    max-height:inherit;
 
 }
 
@@ -39,7 +39,7 @@ form {
      text-align:left;
 }
 
-.container {
+.container-fluid {
     display: table-cell;
     letter-spacing: 1px;
     border: 1px double seagreen;
@@ -50,17 +50,25 @@ input[type="radio"]{
     vertical-align: middle;
     text-anchor:start;
     cursor: pointer;
-
 }
 
 
 input[type="number"] {
-    width: 90%;
-    display: compact;
+   display: flex;
+       text-anchor:start;
+
+   vertical-align: baseline;
+    
 }
 
 input[type="submit"]{
     width:90%;
     vertical-align:top;
 
+}
+
+.badge{
+    font-size:25px;
+    background-color:inherit;
+    color:red;
 }
