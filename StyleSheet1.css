@@ -1,74 +1,48 @@
 ﻿body {
-    background-color: honeydew;
-     max-width:400px;
-     min-height: 400px;
-     min-width:600px;
-     max-height:1000px;
-     padding: 2% 5% 5% 10%;
+    background-color: #5bc0de;
+    max-width: 400px;
+    min-height: 400px;
+    min-width: 600px;
+    max-height: 1000px;
+    color: darkslategrey;
+    padding: 2% 5% 5% 10%;
 }
 
 #input_area {
-    align-self:center;
-    background-color: antiquewhite;
-    border: 10px double seagreen;
+    align-self: center;
+    background-color: #e4946b;
+    border: 10px double #eee;
     margin: auto;
-    color: seagreen;
     text-align: center;
     font-style: oblique;
     font-size: 30px;
-    max-width:inherit;
-    max-height:inherit;
-
+    max-width: inherit;
+    max-height: inherit;
+    margin-bottom: auto;
 }
 
 form {
     padding: 5%;
-    max-width:inherit;
-    margin-bottom:auto;
+    max-width: inherit;
+    margin-bottom: auto;
 }
 
-#output_area {
-    background-color: Highlight;
-    border: 10px groove;
-    margin: inherit;
-    color: crimson;
-    font-style: oblique;
+.list-group {
+    padding: 0% 1% 1% 1%;
     font-size: 20px;
-    max-width:inherit;
-     max-height:300px;
-     text-align:left;
+    margin-bottom: auto;
+}
+.list-group-item{
+    background-color:#d9534f;
+    color:wheat;
 }
 
-.container-fluid {
-    display: table-cell;
-    letter-spacing: 1px;
-    border: 1px double seagreen;
+input[type="submit"] {
+    width: 90%;
+    vertical-align: top;
 }
 
-input[type="radio"]{
-    display: inline-block;
-    vertical-align: middle;
-    text-anchor:start;
-    cursor: pointer;
-}
-
-
-input[type="number"] {
-   display: flex;
-       text-anchor:start;
-
-   vertical-align: baseline;
-    
-}
-
-input[type="submit"]{
-    width:90%;
-    vertical-align:top;
-
-}
-
-.badge{
-    font-size:25px;
-    background-color:inherit;
-    color:red;
+.badge {
+    font-size: 25px;
+    background-color: inherit;
 }

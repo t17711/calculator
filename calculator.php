@@ -49,7 +49,7 @@
             <input type="submit" class="btn btn-info" value="Submit" />
 
         </form>
-
+        <hr />
         <ul class="list-group">
             <?php
             generate_result();
