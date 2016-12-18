@@ -24,7 +24,7 @@
             }
         }
         return "Percentage cannot contain ". gettype($data);
-        
+
     }
 
     // check if price is number and is bugger than 0
@@ -71,7 +71,8 @@
     // displays list of item
     function m_display_list_groups($statement,$val){
         echo "<li class='list-group-item'>";
-        echo "<span class='badge'>" .$val . "</span>";
+        if(is_numeric($val))
+            echo "<span class='badge'>" .number_format($val,2) . "</span>";
         echo $statement;
         echo "</li>";
     }
