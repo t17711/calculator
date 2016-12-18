@@ -2,7 +2,7 @@
 
 *Tip Calcultoe* is a tip calculator PHP page.
 
-Submitted by: *Binod Timalsina**
+Submitted by: **Binod Timalsina**
 
 Time spent: **4** hours spent in total
 
