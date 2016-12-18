@@ -30,7 +30,7 @@
 <body>
     <div id="input_area">
         <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
-            <div class="input-group input-group-lg">
+            <div id="input_price" class="input-group input-group-lg">
                 <span class="input-group-addon">$</span>
                 <input class="form-control" type="text" name="input" value="<?php echo !empty($_POST['input']) ? $_POST['input'] : '' ?>" />
             </div>
@@ -40,9 +40,7 @@
             <div class="panel panel-default" id="input_perc">
                 <div class="panel-heading">Tip percentage</div>
                 <div class="panel-body">
-                    <?php
-                    generate_radio();
-                    ?>
+                    <?php  generate_radio();   ?>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon">
                             <input id="radio" type="radio" name="percentage" value="custom"
@@ -55,18 +53,24 @@
                         <span class="input-group-addon">%</span>
 
                     </div>
+
+
                 </div>
 
             </div>
 
+            <div id="input_split" class="input-group input-group-lg">
+                <span class="input-group-addon">Split</span>
+                <input class="form-control" type="text" name="split" value="<?php echo !empty($_POST['split']) ? $_POST['split'] : '1' ?>" />
+            </div>
+
+            <hr />
             <input type="submit" class="btn btn-info" value="Submit" />
 
         </form>
         <hr />
         <ul class="list-group">
-            <?php
-            generate_result();
-            ?>
+            <?php  generate_result();   ?>
         </ul>
 
     </div>
@@ -77,107 +81,127 @@
 
 <?php
 
+    function generate_result(){
+
+        // checks all the form fields validates input and outputs result
+        $bill_filled = !empty($_POST["input"]);
+        $percent_submitted =!empty($_POST["percentage"]);
+        $custom_perc_entered =!empty($_POST["custom"]);
+        $split_submitted =!empty($_POST["split"]);
+
+        $text_input_error = $custom_input_error = $split_input_error = "error";
+        $valid_price = true;
+        $valid_perc = false;
+        $valid_split = false;
+        $custom_selected =false;
+        $val = 0;
+        $perc = 0;
+        $split = 0;
+
+        // check split value
+        if($split_submitted){
+            $split= $_POST['split'];
+            $split_input_error = m_valid_split($split);
+            $valid_split = is_bool($split_input_error); // if return is bool then valid
+        }
+        else {
+            $split =1;
+            $valid_split = true;
+        }
 
 
-function generate_radio(){
-    // import functions
-    include 'action.php';
+        // if bill area filled check value
+        if($bill_filled){
+            $val = ($_POST['input']);
+            $text_input_error =m_valid_price($val); // returns true if valid else returns error description string
+            $valid_price = is_bool($text_input_error); // if return is bool then valid
+        }
 
-    // display radio button
-    $percent_submitted =!empty($_POST["percentage"]);
-    for ($x = 10; $x<=20; $x+=5){
-        // three number button
-        echo "<input id='radio' type='radio' name = 'percentage' value='$x'";
-        if($percent_submitted && m_input($_POST["percentage"]) == $x)
-            echo "checked='checked'";
-        echo "/> <label for='percentage'><span></span> $x% </label> " ;
-    }
+        // if percent selected get percent value
+        if ($percent_submitted){
+            $perc =m_input($_POST["percentage"]);
 
-}
+            // if custom button selected then get custom value by reading custom field
+            if($perc == "custom"){
+                $custom_selected =true; // so we have custom value selected
 
-function generate_result(){
+                // check custom values
+                if($custom_perc_entered){
+                    $temp = $_POST["custom"];
+                    $custom_input_error = m_valid_perc($temp); // returns true if valid else returns error description string
+                    $valid_perc = is_bool($custom_input_error);
+                    if($valid_perc)
+                        $perc = $temp;
+                }
 
-    // checks all the form fields validates input and outputs result
-    $bill_filled = !empty($_POST["input"]);
-    $percent_submitted =!empty($_POST["percentage"]);
-    $custom_perc_entered =!empty($_POST["custom"]);
-
-    $text_input_error = $custom_input_error ="error";
-    $valid_price = true;
-    $valid_perc = false;
-    $custom_selected =false;
-    $val = 0;
-    $perc = 0;
-
-    // if bill area filled check value
-    if($bill_filled){
-        $val = ($_POST['input']);
-        $text_input_error =m_valid_price($val); // returns true if valid else returns error description string
-        $valid_price = is_bool($text_input_error); // if return is bool then valid
-    }
-
-    // if percent selected get percent value
-    if ($percent_submitted){
-        $perc =m_input($_POST["percentage"]);
-
-        // if custom button selected then get custom value by reading custom field
-        if($perc == "custom"){
-            $custom_selected =true; // so we have custom value selected
-
-            // check custom values
-            if($custom_perc_entered){
-                $temp = $_POST["custom"];
-                $custom_input_error = m_valid_perc($temp); // returns true if valid else returns error description string
-                $valid_perc = is_bool($custom_input_error);
-                if($valid_perc)
-                    $perc = $temp;
+            }
+            else{ // if custom not selected then radio gives valid
+                $valid_perc = true;
             }
 
         }
-        else{ // if custom not selected then radio gives valid
-            $valid_perc = true;
+
+
+        // if bill is filled and price is valid, percent is selected and is valid then get tip
+        if($bill_filled && $percent_submitted && $valid_price && $valid_perc && $valid_split) {
+
+            $tip = m_percentage($val, $perc);
+            m_display_list_groups("The Subtotal ". $val . " and tip ". $perc . "%","");
+            m_display_list_groups( "The Tip is:",$tip);
+            if($split>1){
+                m_display_list_groups( "Tip Splitted ". $split . " ways is : ",$tip/$split);
+            }
         }
 
-    }
+        // errors
+        if(!$bill_filled){ // if bill not filled
+            m_print_error( "No number submitted");
+        }
 
 
-    // if bill is filled and price is valid, percent is selected and is valid then get tip
-    if($bill_filled && $percent_submitted && $valid_price && $valid_perc) {
-
-        $tip = m_percentage($val, $perc);
-        m_display_list_groups("The Money is:",$val);
-        m_display_list_groups( "The percentage is:",$perc);
-        m_display_list_groups( "The Tip is:",$tip);
-    }
-
-    // errors
-    if(!$bill_filled){ // if bill not filled
-        m_print_error( "No number submitted");
-    }
-
-
-    if($percent_submitted){
-        if($custom_selected){ // custom percentage error check, if it is selected
-            if($custom_perc_entered){// if custom value is entered
-                if(!$valid_perc){ // and entered value is not valid print errors
-                    m_print_error($custom_input_error);
+        if($percent_submitted){
+            if($custom_selected){ // custom percentage error check, if it is selected
+                if($custom_perc_entered){// if custom value is entered
+                    if(!$valid_perc){ // and entered value is not valid print errors
+                        m_print_error($custom_input_error);
+                    }
+                }
+                else{// if nothing entered show this
+                    m_print_error("No Custom Percentage Entered");
                 }
             }
-            else{// if nothing entered show this
-                m_print_error("No Custom Percentage Entered");
-            }
+
+        }
+        else{ // percent not submitted
+            m_print_error("No percentage selected");
+        }
+
+
+        if(!$valid_price){ // price submitted but not valid
+            m_print_error($text_input_error);
+        }
+
+        if(!$valid_split){
+            m_print_error($split_input_error);
+        }
+    }
+
+
+    function generate_radio(){
+
+        // import functions
+        include 'action.php';
+
+        // display radio button
+        $percent_submitted =!empty($_POST["percentage"]);
+        for ($x = 10; $x<=20; $x+=5){
+            // three number button
+            echo "<input id='radio' type='radio' name = 'percentage' value='$x'";
+            if($percent_submitted && m_input($_POST["percentage"]) == $x)
+                echo "checked='checked'";
+            echo "/> <label for='percentage'><span></span> $x% </label> " ;
         }
 
     }
-    else{ // percent not submitted
-        m_print_error("No percentage selected");
-    }
-
-
-    if(!$valid_price){ // price submitted but not valid
-        m_print_error($text_input_error);
-    }
-
-}
 
 ?>
