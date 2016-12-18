@@ -1,6 +1,6 @@
 # Pre-work - *Name of App Here*
 
-*Tip Calcultoe* is a tip calculator PHP page.
+*Tip Calcultor* is a tip calculator PHP page.
 
 Submitted by: **Binod Timalsina**
 
