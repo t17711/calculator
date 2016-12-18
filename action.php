@@ -14,7 +14,7 @@
     function m_valid_perc($data){
         if(is_numeric($data)){
             if($data<0){
-                return "Percentage cannot be ngative";
+                return "Percentage cannot be negative";
             }
             else if ($data > 100){
                 return "Percentage cannot be bigger than 100%";
@@ -45,7 +45,7 @@
 
     // check if split is valid
     function m_valid_split($data){
-        if(is_numeric($data)){ // check if enty is number
+        if(is_numeric($data)){ // check if entry is number
             if(is_int($data + 0)){ // check if number is integer
 
                 if($data>0){
@@ -54,7 +54,7 @@
                 }
                 else{
                     if ($data == 0) return "Cannot split 0 ways";
-                    return "cxannot split negative ways";
+                    return "cannot split negative ways";
                 }
             }
             return "split number must be integer";

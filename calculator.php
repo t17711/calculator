@@ -149,7 +149,7 @@
             m_display_list_groups("The Subtotal ". $val . " and tip ". $perc . "%","");
             m_display_list_groups( "The Tip is:",$tip);
             if($split>1){
-                m_display_list_groups( "Tip Splitted ". $split . " ways is : ",$tip/$split);
+                m_display_list_groups( "Tip split ". $split . " ways is : ",$tip/$split);
             }
         }
 
