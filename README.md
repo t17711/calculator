@@ -31,4 +31,4 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-I did not know PHP before and had limited knowlege of HTML and css. So i had to learn those things fast to build this page. It seems most challanging stuff was gui. It was hard to exactly make it look like I wanted.
+I did not know PHP before and had limited knowlege of HTML and css. So I had to learn those things fast to build this page. It seems most challanging stuff was GUI. It was hard to exactly make it look like I wanted.
