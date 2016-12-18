@@ -74,7 +74,7 @@
     function m_display_list_groups($statement,$val){
         echo "<li class='list-group-item'>";
         if(is_numeric($val))
-            echo "<span class='badge'>" .number_format($val,2) . "</span>";
+            echo "<span class='badge'> $" .number_format($val,2) . "</span>";
         echo $statement;
         echo "</li>";
     }
