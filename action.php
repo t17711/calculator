@@ -30,15 +30,16 @@
     // check if price is number and is bugger than 0
     function m_valid_price($data){
         if(is_numeric($data)){
-            if($data>=0){
+            if($data>0){
                 return true;
             }
             else{
-                return "Price is negative";
+                if ($data == 0) return "Subtotal cannot be 0";
+                return "Subtotal cannot be negative";
             }
         }
 
-      return "Price cannot contain ". gettype($data);
+        return "Subtotal cannot contain ". gettype($data);
     }
 
 
@@ -47,12 +48,13 @@
         if(is_numeric($data)){ // check if enty is number
             if(is_int($data + 0)){ // check if number is integer
 
-                if($data>=0){
+                if($data>0){
 
                     return true;
                 }
                 else{
-                    return "Split is negative";
+                    if ($data == 0) return "Cannot split 0 ways";
+                    return "cxannot split negative ways";
                 }
             }
             return "split number must be integer";

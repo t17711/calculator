@@ -32,7 +32,7 @@
         <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
             <div id="input_price" class="input-group input-group-lg">
                 <span class="input-group-addon">$</span>
-                <input class="form-control" type="text" name="input" value="<?php echo !empty($_POST['input']) ? $_POST['input'] : '' ?>" />
+                <input class="form-control" type="text" name="input" value="<?php echo isset($_POST['input']) ? $_POST['input'] : '' ?>" />
             </div>
             <div class="panel-footer">Enter Bill subtotal </div>
 
@@ -44,11 +44,11 @@
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon">
                             <input id="radio" type="radio" name="percentage" value="custom"
-                                <?php if(!empty($_POST["percentage"]) && m_input($_POST["percentage"]) == "custom"){echo "checked='checked'";}?> />
+                                <?php if(isset($_POST["percentage"]) && m_input($_POST["percentage"]) == "custom"){echo "checked='checked'";}?> />
                             custom
                         </span>
 
-                        <input class="form-control" type="text" name="custom" value="<?php echo !empty($_POST['custom']) ? $_POST['custom'] : '' ?>" />
+                        <input class="form-control" type="text" name="custom" value="<?php echo isset($_POST['custom']) ? $_POST['custom'] : '' ?>" />
 
                         <span class="input-group-addon">%</span>
 
@@ -61,7 +61,7 @@
 
             <div id="input_split" class="input-group input-group-lg">
                 <span class="input-group-addon">Split</span>
-                <input class="form-control" type="text" name="split" value="<?php echo !empty($_POST['split']) ? $_POST['split'] : '1' ?>" />
+                <input class="form-control" type="text" name="split" value="<?php echo isset($_POST['split']) ? $_POST['split'] : '1' ?>" />
             </div>
 
             <hr />
@@ -84,10 +84,10 @@
     function generate_result(){
 
         // checks all the form fields validates input and outputs result
-        $bill_filled = !empty($_POST["input"]);
-        $percent_submitted =!empty($_POST["percentage"]);
-        $custom_perc_entered =!empty($_POST["custom"]);
-        $split_submitted =!empty($_POST["split"]);
+        $bill_filled = isset($_POST["input"]);
+        $percent_submitted =isset($_POST["percentage"]);
+        $custom_perc_entered =isset($_POST["custom"]);
+        $split_submitted =isset($_POST["split"]);
 
         $text_input_error = $custom_input_error = $split_input_error = "error";
         $valid_price = true;
@@ -193,7 +193,7 @@
         include 'action.php';
 
         // display radio button
-        $percent_submitted =!empty($_POST["percentage"]);
+        $percent_submitted =isset($_POST["percentage"]);
         for ($x = 10; $x<=20; $x+=5){
             // three number button
             echo "<input id='radio' type='radio' name = 'percentage' value='$x'";
