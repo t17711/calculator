@@ -46,14 +46,14 @@
 	}
 
     function m_display_list_groups($statement,$val){
-        echo "<li class=\"list-group-item\">";
-        echo "<span class=\"badge\">" .$val . "</span>";
+        echo "<li class='list-group-item'>";
+        echo "<span class='badge'>" .$val . "</span>";
         echo $statement;
         echo "</li>";
     }
 
     function m_print_error($data){
-        echo "<li class=\"list-group-item\">";
+        echo "<li class='list-group-item'>";
         echo $data;
         echo "</li>";
     }

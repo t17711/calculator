@@ -1,68 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
+
     <!-- BOOTSTRAP -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- BOOTSTRAP -->
 
-        <title>Tip Calculator</title>
-        <link rel="stylesheet" type="text/css" href="StyleSheet1.css" />
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" type="text/css" href="StyleSheet1.css" />
 </head>
 
 <body>
     <div id="input_area">
         <form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">$</span>
+                <input class="form-control" type="text" name="input" value="<?php echo !empty($_POST['input']) ? $_POST['input'] : '' ?>" />
+            </div>
+            <div class="panel-footer">Enter Bill subtotal </div>
 
-            <input class="form-control" type="text" name="input" value="<?php echo !empty($_POST['input']) ? $_POST['input'] : '0' ?>" />
-                <label for="input"><span></span> Enter Bill subtotal </label>
-
-            <hr />  
-             
+            <hr />
             <div class="panel panel-default" id="input_perc">
                 <div class="panel-heading">Tip percentage</div>
                 <div class="panel-body">
                     <?php
-            generate_radio();
+                    generate_radio();
                     ?>
-                </div>
-                
-                <div class="panel-body">
-     
-                    <input id="radio" type="radio" name="percentage" value="custom" <?php
-                            if(!empty($_POST["percentage"]) && m_input($_POST["percentage"]) == "custom"){
-                                echo "checked=\"checked\"";
-                            }
-                                                                                    ?> 
-                            /> <label for="percentage"><span></span> custom </label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon">
+                            <input id="radio" type="radio" name="percentage" value="custom"
+                                <?php if(!empty($_POST["percentage"]) && m_input($_POST["percentage"]) == "custom"){echo "checked='checked'";}?> />
+                            custom
+                        </span>
 
+                        <input class="form-control" type="text" name="custom" value="<?php echo !empty($_POST['custom']) ? $_POST['custom'] : '' ?>" />
 
-                    <input class="form-control" type="text" name="custom" 
-                           value="<?php echo !empty($_POST['custom']) ? $_POST['custom'] : '0' ?>" />
-                    <label for="input">
-                        <span></span>Enter Bill subtotal
-                    </label>
+                        <span class="input-group-addon">%</span>
+
+                    </div>
                 </div>
 
             </div>
-          
+
             <input type="submit" class="btn btn-info" value="Submit" />
 
         </form>
@@ -90,57 +86,62 @@ function generate_radio(){
     // display radio button
     $percent_submitted =!empty($_POST["percentage"]);
     for ($x = 10; $x<=20; $x+=5){
-         echo "<input id=\"radio\" type=\"radio\" name = \"percentage\" value=\"$x\"";
+        // three number button
+        echo "<input id='radio' type='radio' name = 'percentage' value='$x'";
         if($percent_submitted && m_input($_POST["percentage"]) == $x)
-            echo "checked=\"checked\"";
-         echo "/> <label for=\"percentage\"><span></span> $x% </label> " ;
+            echo "checked='checked'";
+        echo "/> <label for='percentage'><span></span> $x% </label> " ;
     }
-
-
-
 
 }
 
 function generate_result(){
 
+    // checks all the form fields validates input and outputs result
     $bill_filled = !empty($_POST["input"]);
     $percent_submitted =!empty($_POST["percentage"]);
     $custom_perc_entered =!empty($_POST["custom"]);
 
     $text_input_error = $custom_input_error ="error";
     $valid_price = true;
-    $valid_perc = true;
+    $valid_perc = false;
     $custom_selected =false;
     $val = 0;
     $perc = 0;
+
+    // if bill area filled check value
     if($bill_filled){
         $val = ($_POST['input']);
-        $text_input_error =m_valid_price($val);
-        $valid_price = is_bool($text_input_error);
+        $text_input_error =m_valid_price($val); // returns true if valid else returns error description string
+        $valid_price = is_bool($text_input_error); // if return is bool then valid
     }
 
+    // if percent selected get percent value
     if ($percent_submitted){
         $perc =m_input($_POST["percentage"]);
+
+        // if custom button selected then get custom value by reading custom field
         if($perc == "custom"){
-            $custom_selected =true;
-            $valid_perc = false;
+            $custom_selected =true; // so we have custom value selected
+
+            // check custom values
             if($custom_perc_entered){
                 $temp = $_POST["custom"];
-                $custom_input_error = m_valid_perc($temp);
+                $custom_input_error = m_valid_perc($temp); // returns true if valid else returns error description string
                 $valid_perc = is_bool($custom_input_error);
                 if($valid_perc)
                     $perc = $temp;
             }
 
         }
-        else{
+        else{ // if custom not selected then radio gives valid
             $valid_perc = true;
         }
 
     }
 
 
-
+    // if bill is filled and price is valid, percent is selected and is valid then get tip
     if($bill_filled && $percent_submitted && $valid_price && $valid_perc) {
 
         $tip = m_percentage($val, $perc);
@@ -150,24 +151,30 @@ function generate_result(){
     }
 
     // errors
-    if(!$bill_filled){
+    if(!$bill_filled){ // if bill not filled
         m_print_error( "No number submitted");
     }
+
+
     if($percent_submitted){
-        if($custom_selected){
-            if($custom_perc_entered)
-                 m_print_error($custom_input_error);
-            else
+        if($custom_selected){ // custom percentage error check, if it is selected
+            if($custom_perc_entered){// if custom value is entered
+                if(!$valid_perc){ // and entered value is not valid print errors
+                    m_print_error($custom_input_error);
+                }
+            }
+            else{// if nothing entered show this
                 m_print_error("No Custom Percentage Entered");
+            }
         }
 
     }
-    else{
+    else{ // percent not submitted
         m_print_error("No percentage selected");
     }
 
 
-    if(!$valid_price){
+    if(!$valid_price){ // price submitted but not valid
         m_print_error($text_input_error);
     }
 
