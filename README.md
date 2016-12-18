@@ -1,4 +1,4 @@
-# Pre-work - *Name of App Here*
+# Pre-work - *Tip Calculator*
 
 *Tip Calcultor* is a tip calculator PHP page.
 
