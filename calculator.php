@@ -1,7 +1,12 @@
+<?php
+
+session_start();
+$r = session_id();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <!-- BOOTSTRAP -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -81,7 +86,13 @@
 
 <?php
 
+
     function generate_result(){
+        if (!isset($_SESSION['start'])) {
+            //show site for the first time part
+            $_SESSION['start'] = 1;
+            return;
+        }
 
         // checks all the form fields validates input and outputs result
         $bill_filled = isset($_POST["input"]);
